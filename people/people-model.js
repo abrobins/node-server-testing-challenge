@@ -6,11 +6,15 @@ async function create(data) {
 }
 
 async function update(id, data) {
-  return null;
+  return db("people")
+    .where({ id })
+    .update(data);
 }
 
 function remove(id) {
-  return null;
+  return db("people")
+    .where("id", Number(id))
+    .del();
 }
 
 function find() {
@@ -18,12 +22,9 @@ function find() {
 }
 
 function findById(id) {
-  return (
-    db("people")
-      .where("id", id)
-      // .first same as calling .limit(1) and .select() and destructuring first element from array.
-      .first()
-  );
+  return db("people")
+    .where("id", id)
+    .first();
 }
 
 module.exports = {

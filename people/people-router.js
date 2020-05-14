@@ -33,4 +33,22 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+
+  People.remove(id)
+    .then(deleted => {
+      if (deleted) {
+        res.status(204).json({ removed: deleted });
+      } else {
+        res
+          .status(404)
+          .json({ message: "Could not find person with given id" });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ message: "Failed to delete person" });
+    });
+});
+
 module.exports = router;
